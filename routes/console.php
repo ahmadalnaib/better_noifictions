@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+Artisan::command('email:cleanup', function () {
+    $this->info('Cleaning up the emails...');
+
+  
+    $this->info("emails have been delete" . now());
+})->purpose('Clean up the emails');

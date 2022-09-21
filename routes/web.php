@@ -25,7 +25,16 @@ Route::get('/contact', function () {
 
 Route::post('/contact',[ContactController::class,'store'])->name('contact.store');
 
+Route::get('markAsRead',function(){
+    auth()->user()->unreadNotifications->markAsRead();
+  
+    return redirect()->back();
+})->name('markAsRead');
 
+Route::get('deleteNot',function(){
+    auth()->user()->notifications()->delete();
+    return redirect()->back();
+})->name('deleteNot');
 
 
 Auth::routes();

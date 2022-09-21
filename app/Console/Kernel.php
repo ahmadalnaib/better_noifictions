@@ -2,7 +2,9 @@
 
 namespace App\Console;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -16,6 +18,13 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        // $schedule->call(function(){
+        //   Log::info('inline task time').now();
+        // })->everyMinute();
+        $schedule->call(function () {
+            DB::table('contacts')->delete();
+        })->lastDayOfMonth('15:00');
+        
     }
 
     /**

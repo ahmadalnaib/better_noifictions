@@ -84,7 +84,7 @@
             <div class="offcanvas-body">
                 @foreach (auth()->user()->unreadNotifications  as $notification  )
             
-                <a href="" class="card mb-3 shadow-sm nav-link not" style="max-width: 540px;" >
+                <a href="{{route('markAsRead')}}" class="card mb-3 shadow-sm nav-link not" style="max-width: 540px;" >
                     <div class="row g-0">
                    
                       <div class="col-md-12">
