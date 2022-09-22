@@ -23,6 +23,7 @@ class Kernel extends ConsoleKernel
         // })->everyMinute();
         $schedule->call(function () {
           $emails=  DB::table('contacts')->delete();
+          $services=DB::table('services')->delete();
         })->everyMinute()->name("Delete All Emails")
         // ->lastDayOfMonth('15:00')
         // ->everyMinute()
