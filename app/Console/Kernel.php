@@ -22,8 +22,13 @@ class Kernel extends ConsoleKernel
         //   Log::info('inline task time').now();
         // })->everyMinute();
         $schedule->call(function () {
-            DB::table('contacts')->delete();
-        })->lastDayOfMonth('15:00');
+          $emails=  DB::table('contacts')->delete();
+        })->lastDayOfMonth('15:00')
+        // ->everyMinute()
+        ->emailOutputTo('alnaib888@gmail.com');
+        // 
+
+       
         
     }
 

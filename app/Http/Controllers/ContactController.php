@@ -17,7 +17,7 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
-        $userSchema = User::all();
+        $users = User::all();
         $contacts=Contact::create([
          
             'name'=>$request->name,
@@ -25,7 +25,7 @@ class ContactController extends Controller
              'message'=>$request->message
             
         ]);
-        Notification::send($userSchema, new ContactEmail($contacts));
+        Notification::send($users, new ContactEmail($contacts));
         return redirect()->back();
     }
 }

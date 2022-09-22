@@ -50,7 +50,9 @@
                             @endif
                         @else
                         <button class="btn btn-primary position-relative me-5 mt-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="bi bi-bell"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{auth()->user()->unreadNotifications->count() }}</span>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{auth()->user()->unreadNotifications->count() }}
+                            </span>
                         </button>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -80,11 +82,23 @@
               <h5 class="offcanvas-title fw-bold" id="offcanvasWithBothOptionsLabel">New Email</h5>
               <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
+            @if(Auth::check())
+          <div class="d-flex justify-content-around align-items-center rounded mt-4">
+            @if(auth()->user()->unreadNotifications->count())
+            <a class="text-center p-2 mb-2 nav-link btn btn-secondary text-white" href="{{route('markAsRead')}}">Mark all as read</a>
+            @endif
+            @if(auth()->user()->notifications->count())
+            <a class="text-center p-2 mb-2 nav-link btn btn-danger text-white" href="{{route('deleteNot')}}">Delete all </a>
+            @else
+            <p>there is no new notifications</p>
+            @endif
+            
+          </div>
             
             <div class="offcanvas-body">
-                @foreach (auth()->user()->unreadNotifications  as $notification  )
-            
-                <a href="{{route('markAsRead')}}" class="card mb-3 shadow-sm nav-link not" style="max-width: 540px;" >
+              
+                @foreach (auth()->user()->unreadNotifications  as $notification)
+                <a href="{{route('markAsRead')}}" class="card mb-3 bg-white shadow-sm nav-link text-dark" style="max-width: 540px;" >
                     <div class="row g-0">
                    
                       <div class="col-md-12">
@@ -97,20 +111,57 @@
                                  </div>
                                 </div>
                                 <div class="col-md-10">
+                                    <h5 class="card-title text-dark fw-bold">{{$notification->data['name']}}</h5>
+                                   
+                                    <h5 class="card-title">{{$notification->data['email']}}</h5>
+                                </div>
+                            </div>
+                          </div>
+                          <p class="card-text text-center">  {{Str::limit($notification->data['message'],20)}}</p>
+                          <hr>
+                          <p class="card-text  bg-success p-2 d-flex justify-content-around align-items-center rounded">
+                            <i class="bi bi-clock text-white fs-6"></i>
+                            <small class="text-white">{{$notification->created_at}}</small>
+                        </p>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                 
+                  @endforeach
+                @foreach (auth()->user()->readNotifications  as $notification)
+                <a href="{{route('markAsRead')}}" class="card mb-3 shadow-sm nav-link not" style="max-width: 540px;" >
+                    <div class="row g-0">
+                   
+                      <div class="col-md-12">
+                        <div class="card-body">
+                          <div>
+                            <div class="row">
+                                <div class="col-md-2 p-2">
+                                 <div class="bg-secondary opacity-75 text-center rounded-2 ">
+                                    <i class="bi bi-envelope fs-3  text-white"></i>
+                                 </div>
+                                </div>
+                                <div class="col-md-10">
                                     <h5 class="card-title text-muted">{{$notification->data['name']}}</h5>
                                    
                                     <h5 class="card-title">{{$notification->data['email']}}</h5>
                                 </div>
                             </div>
                           </div>
-                          <p class="card-text text-center">  {{Str::limit($notification->data['message'],100)}}</p>
+                          <p class="card-text text-center">  {{Str::limit($notification->data['message'],40)}}</p>
                           <hr>
-                          <p class="card-text text-end"><small class="text-muted">{{$notification->created_at}}</small></p>
+                          <p class="card-text  bg-secondary p-2 d-flex justify-content-around align-items-center rounded">
+                            <i class="bi bi-clock text-white fs-6"></i>
+                            <small class="text-white">{{$notification->created_at}}</small>
+                        </p>
                         </div>
                       </div>
                     </div>
                   </a>
+                 
                   @endforeach
+                  @endif
             </div>
           </div>
 
