@@ -77,18 +77,19 @@
             </div>
         </nav>
 
-        <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+        <div class="offcanvas offcanvas-end bg-light"  data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
             <div class="offcanvas-header">
               <h5 class="offcanvas-title fw-bold" id="offcanvasWithBothOptionsLabel">New Email</h5>
               <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
+            <hr>
             @if(Auth::check())
           <div class="d-flex justify-content-around align-items-center rounded mt-4">
             @if(auth()->user()->unreadNotifications->count())
-            <a class="text-center p-2 mb-2 nav-link btn btn-secondary text-white" href="{{route('markAsRead')}}">Mark all as read</a>
+            <a class="text-center py-3 px-4 mb-2 nav-link btn btn-white text-secondary border border-white-50 shadow-sm border-opacity-25" href="{{route('markAsRead')}}">Mark all as read</a>
             @endif
             @if(auth()->user()->notifications->count())
-            <a class="text-center p-2 mb-2 nav-link btn btn-danger text-white" href="{{route('deleteNot')}}">Delete all </a>
+            <a class="text-center py-3 px-4 mb-2 nav-link btn btn-white text-danger border border-white-50 shadow-sm border-opacity-25" href="{{route('deleteNot')}}">Delete all </a>
             @else
             <p>there is no new notifications</p>
             @endif
@@ -98,7 +99,8 @@
             <div class="offcanvas-body">
               
                 @foreach (auth()->user()->unreadNotifications  as $notification)
-                <a href="{{route('markAsRead')}}" class="card mb-3 bg-white shadow-sm nav-link text-dark" style="max-width: 540px;" >
+                @if($notification->type === 'App\Notifications\ServiceEmail')
+                <a href="#" class="card mb-3 bg-white shadow-sm nav-link text-dark" style="max-width: 540px;" >
                     <div class="row g-0">
                    
                       <div class="col-md-12">
@@ -106,28 +108,83 @@
                           <div>
                             <div class="row">
                                 <div class="col-md-2 p-2">
-                                 <div class="bg-success opacity-75 text-center rounded-2 ">
-                                    <i class="bi bi-envelope fs-3  text-white"></i>
+                                 <div class="bg-primary opacity-50 rounded-2 text-center">
+                                    <i class="bi bi-envelope fs-3  text-white "></i>
                                  </div>
                                 </div>
                                 <div class="col-md-10">
-                                    <h5 class="card-title text-dark fw-bold">{{$notification->data['name']}}</h5>
+                                    <h6 class="card-title text-dark fw-bold">Neues Email von {{$notification->data['name']}}</h6>
                                    
-                                    <h5 class="card-title">{{$notification->data['email']}}</h5>
+                                    <h6 class="card-title text-muted">{{$notification->data['email']}}</h6>
                                 </div>
+                               
+                               
+                                
+                                 
+                             
                             </div>
                           </div>
-                          <p class="card-text text-center">  {{Str::limit($notification->data['message'],20)}}</p>
+                          <h6 class="card-text text-dark">  {{Str::limit($notification->data['message'],20)}}</h6>
                           <hr>
-                          <p class="card-text  bg-success p-2 d-flex justify-content-around align-items-center rounded">
-                            <i class="bi bi-clock text-white fs-6"></i>
-                            <small class="text-white">{{$notification->created_at}}</small>
-                        </p>
+                          <div class="card-text  bg-light p-1 row   rounded ">
+                            <span class="col-md-6  rounded text-primary  text-decoration-underline">
+                                Services Email</span>
+                            <p class="col-md-6">
+                              
+                                <small class="text-muted ">  
+                                    <i class="bi bi-clock text-muted fs-6"> </i>{{$notification->created_at}}
+                                </small>
+                            </p>
+                         
+                        </div>
                         </div>
                       </div>
                     </div>
                   </a>
-                 
+                  @else
+                  <a href="#" class="card mb-3 bg-white shadow-sm nav-link text-dark" style="max-width: 540px;" >
+                    <div class="row g-0">
+                   
+                      <div class="col-md-12">
+                        <div class="card-body">
+                          <div>
+                            <div class="row">
+                                <div class="col-md-2 p-2">
+                                 <div class="bg-success opacity-50 rounded-2 text-center">
+                                    <i class="bi bi-envelope fs-3  text-white "></i>
+                                 </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <h6 class="card-title text-dark fw-bold">{{$notification->data['name']}}</h6>
+                                   
+                                    <h6 class="card-title text-muted">{{$notification->data['email']}}</h6>
+                                </div>
+                               
+                               
+                                
+                                 
+                             
+                            </div>
+                          </div>
+                          <h6 class="card-text text-muted ">  {{Str::limit($notification->data['message'],30)}}</h6>
+                          <hr>
+                          <div class="card-text  bg-light p-2 row   rounded">
+                            <span class="col-md-6  rounded text-success  text-decoration-underline">
+                                Contact Email</span>
+                            <p class="col-md-6">
+                              
+                                <small class="text-muted">  
+                                    <i class="bi bi-clock text-muted fs-6"> </i>{{$notification->created_at}}
+                                </small>
+                            </p>
+                         
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                  @endif
+              
                   @endforeach
                 @foreach (auth()->user()->readNotifications  as $notification)
                 <a href="{{route('markAsRead')}}" class="card mb-3 shadow-sm nav-link not" style="max-width: 540px;" >

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,12 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
+Route::get('/services', function () {
+    return view('services');
+})->name('services');
 
+
+Route::post('/services',[ServiceController::class,'store'])->name('services.store');
 Route::post('/contact',[ContactController::class,'store'])->name('contact.store');
 
 Route::get('markAsRead',function(){

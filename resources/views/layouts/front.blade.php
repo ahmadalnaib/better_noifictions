@@ -37,6 +37,10 @@
                     <a class="nav-link" href="{{route('contact')}}">Contact us</a>
                   </li>
                
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{route('services')}}">Services </a>
+                  </li>
+               
                  
                 </ul>
                 
