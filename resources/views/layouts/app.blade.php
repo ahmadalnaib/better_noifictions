@@ -16,7 +16,7 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<body>
+<body class="bg-white">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -49,6 +49,7 @@
                                 </li>
                             @endif
                         @else
+                     
                         <button class="btn btn-primary position-relative me-5 mt-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="bi bi-bell"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                 {{auth()->user()->unreadNotifications->count() }}
@@ -70,6 +71,9 @@
                                         @csrf
                                     </form>
                                 </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('sentemail.index') }}">Send Email</a>
                             </li>
                         @endguest
                     </ul>
@@ -126,7 +130,7 @@
                           </div>
                           <h6 class="card-text text-dark">  {{Str::limit($notification->data['message'],20)}}</h6>
                           <hr>
-                          <div class="card-text  bg-light p-1 row   rounded ">
+                          <div class="card-text  bg-light  row   rounded ">
                             <span class="col-md-6  rounded text-primary  text-decoration-underline">
                                 Services Email</span>
                             <p class="col-md-6">
@@ -155,7 +159,7 @@
                                  </div>
                                 </div>
                                 <div class="col-md-10">
-                                    <h6 class="card-title text-dark fw-bold">{{$notification->data['name']}}</h6>
+                                    <h6 class="card-title text-dark fw-bold">Neues Email von  {{$notification->data['name']}}</h6>
                                    
                                     <h6 class="card-title text-muted">{{$notification->data['email']}}</h6>
                                 </div>
@@ -168,7 +172,7 @@
                           </div>
                           <h6 class="card-text text-muted ">  {{Str::limit($notification->data['message'],30)}}</h6>
                           <hr>
-                          <div class="card-text  bg-light p-2 row   rounded">
+                          <div class="card-text  bg-light  row   rounded">
                             <span class="col-md-6  rounded text-success  text-decoration-underline">
                                 Contact Email</span>
                             <p class="col-md-6">
@@ -214,7 +218,7 @@
                           </div>
                           <h6 class="card-text text-dark">  {{Str::limit($notification->data['message'],20)}}</h6>
                           <hr>
-                          <div class="card-text  bg-light p-1 row   rounded ">
+                          <div class="card-text  bg-light  row   rounded ">
                             <span class="col-md-6  rounded text-secondary  text-decoration-underline">
                                 Services Email</span>
                             <p class="col-md-6">
@@ -243,7 +247,7 @@
                                  </div>
                                 </div>
                                 <div class="col-md-10">
-                                    <h6 class="card-title text-dark fw-bold">{{$notification->data['name']}}</h6>
+                                    <h6 class="card-title text-dark fw-bold">Neues Email von  {{$notification->data['name']}}</h6>
                                    
                                     <h6 class="card-title text-muted">{{$notification->data['email']}}</h6>
                                 </div>
@@ -256,7 +260,7 @@
                           </div>
                           <h6 class="card-text text-muted ">  {{Str::limit($notification->data['message'],30)}}</h6>
                           <hr>
-                          <div class="card-text  bg-light p-2 row   rounded">
+                          <div class="card-text  bg-light  row   rounded">
                             <span class="col-md-6  rounded text-secondary  text-decoration-underline">
                                 Contact Email</span>
                             <p class="col-md-6">
@@ -277,7 +281,7 @@
             </div>
           </div>
 
-        <main class="py-4">
+        <main class="py-4 container">
             @yield('content')
         </main>
     </div>

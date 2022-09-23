@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SendEmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,5 +45,10 @@ Route::get('deleteNot',function(){
 
 
 Auth::routes();
+
+// send email
+Route::get('/sentemail',[SendEmailController::class,'index'])->name('sentemail.index');
+Route::post('/sentemail',[SendEmailController::class,'mail'])->name('sentemail.store');
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
